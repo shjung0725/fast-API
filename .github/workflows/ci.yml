@@ -1,0 +1,20 @@
+name: FastAPI CI
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Build Docker image
+        run: docker build -t fastapi-demo:latest .
+
+      - name: Run unit tests inside the container
+        run: docker run --rm fastapi-demo:latest pytest -v
